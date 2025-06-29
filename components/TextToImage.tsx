@@ -7,12 +7,15 @@ const VISUAL_STYLES = [
   'Watercolor', 'Steampunk', 'Cyberpunk', 'Vintage', '3D Render', 'Abstract'
 ];
 
+const IMAGE_MODELS = ['flux', 'gptimage', 'playground-v2.5', 'dall-e-3', 'turbo'];
+
 type TtiState = {
     prompt: string;
     enhancedPrompt: string;
     useEnhanced: boolean;
     aspectRatio: string;
     visualStyle: string;
+    model: string;
     imageUrls: string[];
     isGenerating: boolean;
     isEnhancing: boolean;
@@ -31,7 +34,7 @@ interface TextToImageProps {
 export default function TextToImage({ state, setState, finalPrompt, onEnhance, onGenerate, aspectRatios }: TextToImageProps) {
     
     const { 
-        prompt, enhancedPrompt, useEnhanced, aspectRatio, visualStyle, 
+        prompt, enhancedPrompt, useEnhanced, aspectRatio, visualStyle, model,
         imageUrls, isGenerating, isEnhancing, error 
     } = state;
     
@@ -96,7 +99,13 @@ export default function TextToImage({ state, setState, finalPrompt, onEnhance, o
                         )}
                     </div>
                     
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="space-y-4">
+                        <div>
+                            <label htmlFor="model" className="block text-sm font-semibold text-gray-300 mb-2">Image Model</label>
+                            <select id="model" value={model} onChange={e => setState(s => ({ ...s, model: e.target.value }))} className="w-full bg-black/40 border border-white/20 rounded-md p-2.5 focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-[var(--color-primary-500)] transition">
+                                {IMAGE_MODELS.map(m => <option key={m} value={m} className="bg-slate-900 text-white">{m}</option>)}
+                            </select>
+                        </div>
                         <div>
                             <label htmlFor="style" className="block text-sm font-semibold text-gray-300 mb-2">Visual Style</label>
                             <select id="style" value={visualStyle} onChange={e => setState(s => ({ ...s, visualStyle: e.target.value }))} className="w-full bg-black/40 border border-white/20 rounded-md p-2.5 focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-[var(--color-primary-500)] transition">

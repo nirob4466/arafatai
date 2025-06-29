@@ -38,6 +38,7 @@ export default function App() {
         useEnhanced: false,
         aspectRatio: 'Square (1:1)',
         visualStyle: 'Default',
+        model: 'flux',
         imageUrls: [] as string[],
         isGenerating: false,
         isEnhancing: false,
@@ -109,7 +110,7 @@ export default function App() {
         setTtiState(s => ({ ...s, isGenerating: true, error: null, imageUrls: [] }));
 
         const { width, height } = ASPECT_RATIOS[ttiState.aspectRatio];
-        const activeModel = 'turbo';
+        const activeModel = ttiState.model;
         
         const url1 = generateImageUrl(finalPromptForDisplay, activeModel, width, height);
         const url2 = generateImageUrl(finalPromptForDisplay, activeModel, width, height);

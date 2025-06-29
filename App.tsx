@@ -37,8 +37,7 @@ export default function App() {
         enhancedPrompt: '',
         useEnhanced: false,
         aspectRatio: 'Square (1:1)',
-        visualStyle: 'Default',
-        model: 'flux',
+        model: 'gptimage',
         imageUrls: [] as string[],
         isGenerating: false,
         isEnhancing: false,
@@ -77,12 +76,8 @@ export default function App() {
 
     // --- Logic and Handlers for TextToImage ---
     const finalPromptForDisplay = useMemo(() => {
-        let final = ttiState.useEnhanced && ttiState.enhancedPrompt ? ttiState.enhancedPrompt : ttiState.prompt;
-        if (ttiState.visualStyle !== 'Default') {
-            final = `${ttiState.visualStyle} style, ${final}`;
-        }
-        return final;
-    }, [ttiState.prompt, ttiState.enhancedPrompt, ttiState.useEnhanced, ttiState.visualStyle]);
+        return ttiState.useEnhanced && ttiState.enhancedPrompt ? ttiState.enhancedPrompt : ttiState.prompt;
+    }, [ttiState.prompt, ttiState.enhancedPrompt, ttiState.useEnhanced]);
 
     const handleTtiEnhance = async () => {
         if (!ttiState.prompt) {

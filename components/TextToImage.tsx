@@ -2,19 +2,11 @@ import React from 'react';
 import ImageDisplay from './ImageDisplay';
 import { Spinner } from './Spinner';
 
-const VISUAL_STYLES = [
-  'Default', 'Photorealistic', 'Cinematic', 'Anime', 'Fantasy Art', 
-  'Watercolor', 'Steampunk', 'Cyberpunk', 'Vintage', '3D Render', 'Abstract'
-];
-
-const IMAGE_MODELS = ['Arafat Ai', 'Arafat Ai Ultra', 'Arafat Ai Pro', 'Arafat Ai Pro 2', 'Arafat Ai Turbo'];
-
 type TtiState = {
     prompt: string;
     enhancedPrompt: string;
     useEnhanced: boolean;
     aspectRatio: string;
-    visualStyle: string;
     model: string;
     imageUrls: string[];
     isGenerating: boolean;
@@ -34,7 +26,7 @@ interface TextToImageProps {
 export default function TextToImage({ state, setState, finalPrompt, onEnhance, onGenerate, aspectRatios }: TextToImageProps) {
     
     const { 
-        prompt, enhancedPrompt, useEnhanced, aspectRatio, visualStyle, model,
+        prompt, enhancedPrompt, useEnhanced, aspectRatio,
         imageUrls, isGenerating, isEnhancing, error 
     } = state;
     
@@ -100,18 +92,6 @@ export default function TextToImage({ state, setState, finalPrompt, onEnhance, o
                     </div>
                     
                     <div className="space-y-4">
-                        <div>
-                            <label htmlFor="model" className="block text-sm font-semibold text-gray-300 mb-2">Image Model</label>
-                            <select id="model" value={model} onChange={e => setState(s => ({ ...s, model: e.target.value }))} className="w-full bg-black/40 border border-white/20 rounded-md p-2.5 focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-[var(--color-primary-500)] transition">
-                                {IMAGE_MODELS.map(m => <option key={m} value={m} className="bg-slate-900 text-white">{m}</option>)}
-                            </select>
-                        </div>
-                        <div>
-                            <label htmlFor="style" className="block text-sm font-semibold text-gray-300 mb-2">Visual Style</label>
-                            <select id="style" value={visualStyle} onChange={e => setState(s => ({ ...s, visualStyle: e.target.value }))} className="w-full bg-black/40 border border-white/20 rounded-md p-2.5 focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-[var(--color-primary-500)] transition">
-                                {VISUAL_STYLES.map(style => <option key={style} value={style} className="bg-slate-900 text-white">{style}</option>)}
-                            </select>
-                        </div>
                         <div>
                             <label htmlFor="ratio" className="block text-sm font-semibold text-gray-300 mb-2">Aspect Ratio</label>
                             <select id="ratio" value={aspectRatio} onChange={e => setState(s => ({ ...s, aspectRatio: e.target.value }))} className="w-full bg-black/40 border border-white/20 rounded-md p-2.5 focus:ring-2 focus:ring-[var(--color-primary-500)] focus:border-[var(--color-primary-500)] transition">

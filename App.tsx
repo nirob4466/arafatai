@@ -37,7 +37,7 @@ export default function App() {
         enhancedPrompt: '',
         useEnhanced: false,
         aspectRatio: 'Square (1:1)',
-        model: 'gptimage',
+        model: 'flux',
         imageUrls: [] as string[],
         isGenerating: false,
         isEnhancing: false,

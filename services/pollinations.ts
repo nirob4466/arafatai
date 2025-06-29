@@ -3,6 +3,9 @@ import { PollinationsModels } from '../types';
 const API_BASE_URL = 'https://image.pollinations.ai';
 const TEXT_API_BASE_URL = 'https://text.pollinations.ai';
 
+// Some models on Pollinations.ai require the model name in the path, not as a query parameter.
+const PATH_BASED_MODELS = new Set(['gptimage', 'dall-e-3']);
+
 export const fetchImageModels = async (): Promise<PollinationsModels> => {
     try {
         const response = await fetch(`${API_BASE_URL}/models`);
@@ -37,11 +40,23 @@ export const enhancePrompt = async (prompt: string): Promise<string> => {
 
 export const generateImageUrl = (prompt: string, model: string, width: number, height: number): string => {
     const encodedPrompt = encodeURIComponent(prompt);
-    const url = new URL(`${API_BASE_URL}/prompt/${encodedPrompt}`);
+    let urlString: string;
+
+    if (PATH_BASED_MODELS.has(model)) {
+        // Construct URL with model name in the path
+        urlString = `${API_BASE_URL}/prompt/${model}/${encodedPrompt}`;
+    } else {
+        // Construct URL for models that use a query parameter
+        urlString = `${API_BASE_URL}/prompt/${encodedPrompt}`;
+    }
     
-    if (model) {
+    const url = new URL(urlString);
+
+    // For query-based models, add the 'model' parameter if it's not a path-based one
+    if (!PATH_BASED_MODELS.has(model) && model) {
         url.searchParams.append('model', model);
     }
+    
     url.searchParams.append('width', String(width));
     url.searchParams.append('height', String(height));
     url.searchParams.append('seed', String(Math.floor(Math.random() * 100000)));

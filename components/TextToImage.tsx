@@ -7,7 +7,7 @@ const VISUAL_STYLES = [
   'Watercolor', 'Steampunk', 'Cyberpunk', 'Vintage', '3D Render', 'Abstract'
 ];
 
-const IMAGE_MODELS = ['flux', 'gptimage', 'playground-v2.5', 'dall-e-3', 'turbo'];
+const IMAGE_MODELS = ['Arafat Ai', 'Arafat Ai Ultra', 'Arafat Ai Pro', 'Arafat Ai Pro 2', 'Arafat Ai Turbo'];
 
 type TtiState = {
     prompt: string;
